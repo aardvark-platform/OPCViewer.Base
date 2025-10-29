@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - rendering-v56
     paths:
       - RELEASE_NOTES.md 
       - .github/workflows/publish.yml

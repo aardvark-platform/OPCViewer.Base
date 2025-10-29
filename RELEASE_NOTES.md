@@ -1,3 +1,6 @@
+### 1.10.0-prerelease0001
+- Updated to Aardvark.Rendering 5.6 prerelease packages
+
 ### 1.9.2
 - updated aardvark.data.opc
 
