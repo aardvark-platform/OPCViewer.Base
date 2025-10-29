@@ -22,3 +22,4 @@ bin
 /src/LegacyCode/bin/Release/netstandard2.0/LegacyCode.pdb
 /.paket
 /.vscode
+**/.idea

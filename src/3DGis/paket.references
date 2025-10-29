@@ -1,13 +1,8 @@
-group Examples
-    FSharp.Core
-
-    Aardvark.PixImage.Pfim
-    Aardvark.PixImage.FreeImage
-    Aardvark.UI.Primitives
-    Aardvark.Application.Slim.GL
-
-    Adaptify.MSBuild
-
-    Aardium
-
-    Aether
+FSharp.Core
+Aardvark.PixImage.Pfim
+Aardvark.PixImage.FreeImage
+Aardvark.UI.Primitives
+Aardvark.Application.Slim.GL
+Adaptify.MSBuild
+Aardium
+Aether

@@ -154,26 +154,26 @@ module Files =
 module Shader = 
 
     type UniformScope with
-        member x.PointSize : float = uniform?PointSize
+        member x.PointSize : float32 = uniform?PointSize
 
     type pointVertex =
         {
-            [<Position>] pos : V4d
-            [<PointSize>] p : float
-            [<Color>] c : V4d
-            [<TexCoord; Interpolation(InterpolationMode.Sample)>] tc : V2d
+            [<Position>] pos : V4f
+            [<PointSize>] p : float32
+            [<Color>] c : V4f
+            [<TexCoord; Interpolation(InterpolationMode.Sample)>] tc : V2f
             [<SourceVertexIndex>] i : int
         }
 
-    let constantColor (color : V4d) (v : pointVertex) =
+    let constantColor (color : V4f) (v : pointVertex) =
         vertex {
-            let ps : float = uniform?PointSize
+            let ps = uniform.PointSize
             return { v with c = color; p = ps }
         }
 
     let differentColor (v : pointVertex) =
         vertex {
-            let ps : float = uniform?PointSize
+            let ps = uniform.PointSize
             return { v with c = v.c; p = ps }
         }
 
@@ -190,8 +190,8 @@ module Shader =
         fragment {
             let tc = v.tc
 
-            let c = 2.0 * tc - V2d.II
-            if c.Length > 1.0 then
+            let c = 2.0f * tc - V2f.II
+            if c.Length > 1.0f then
                 discard()
 
             return v
@@ -244,7 +244,7 @@ module Drawing =
 
     let drawSingleColoredFeaturePoints (sgfeatures : AdaptiveSgFeatures) (pointSize:aval<float>) (color:C4f) = 
         let pointsF = stablePoints sgfeatures
-        drawSingleColorPoints pointsF (color.ToV4d()) pointSize |> Sg.trafo sgfeatures.trafo
+        drawSingleColorPoints pointsF (color.ToV4f()) pointSize |> Sg.trafo sgfeatures.trafo
 
     let drawFeaturePoints (sgfeatures : AdaptiveSgFeatures) (pointSize:aval<float>) = 
         let pointsF = stablePoints sgfeatures
@@ -257,7 +257,7 @@ module Drawing =
           | None -> [||]
           | Some a ->  [|V3f (t.Backward.TransformPos(a))|]) hoveredProduct trafo 
 
-      drawSingleColorPoints hoveredPoint (C4f.Yellow.ToV4d()) (pointSize |> AVal.map(fun x -> x + 5.0)) |> Sg.trafo trafo
+      drawSingleColorPoints hoveredPoint (C4f.Yellow.ToV4f()) (pointSize |> AVal.map(fun x -> x + 5.0)) |> Sg.trafo trafo
 
     let pass0 = RenderPass.main
     let pass1 = RenderPass.after "outline" RenderPassOrder.Arbitrary pass0

@@ -179,13 +179,12 @@ module Sg =
     Sg.PickableApplicator (pick, AVal.constant sg) :> ISg
 
   let opcSg loadedHierarchies (selectedScalar:aval<Option<_>>) (picking : aval<bool>) (bb : Box3d) = 
-    
-    let config = { wantMipMaps = true; wantSrgb = false; wantCompressed = false }
+
     let sg = 
       loadedHierarchies
         |> List.map (fun (g,dir,info) ->         
           let texPath = Patch.extractTexturePath (OpcPaths dir) info 0
-          let tex = FileTexture(texPath,config) :> ITexture
+          let tex = FileTexture(texPath) :> ITexture
                     
           Sg.ofIndexedGeometry g
               |> Sg.trafo (AVal.constant info.Local2Global)
