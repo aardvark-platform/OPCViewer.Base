@@ -1,4 +1,4 @@
-name: Windows
+name: Build
 
 on: 
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
     paths-ignore:
     - 'README.md'
-    
+
 jobs:
   build:
 
