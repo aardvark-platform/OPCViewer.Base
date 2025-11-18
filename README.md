@@ -2,6 +2,8 @@
 
 [![Build](https://github.com/aardvark-platform/opcviewer.base/actions/workflows/build.yml/badge.svg)](https://github.com/aardvark-platform/opcviewer.base/actions/workflows/build.yml)
 [![Publish](https://github.com/aardvark-platform/opcviewer.base/actions/workflows/publish.yml/badge.svg)](https://github.com/aardvark-platform/opcviewer.base/actions/workflows/publish.yml)
+[![Version](https://img.shields.io/nuget/vpre/opcviewer.base)](https://www.nuget.org/packages/opcviewer.base/)
+[![Downloads](https://img.shields.io/nuget/dt/opcviewer.base)](https://www.nuget.org/packages/opcviewer.base/)
 
 Supported opc folders are using a Patches and Images Folder a hierarchy.cache.
 
