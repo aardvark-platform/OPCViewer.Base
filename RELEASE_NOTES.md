@@ -1,3 +1,6 @@
+### 1.10.0
+- Updated to Aardvark.Rendering 5.6 and Media 5.6 packages
+
 ### 1.10.0-prerelease0001
 - Updated to Aardvark.Rendering 5.6 prerelease packages
 
