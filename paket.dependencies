@@ -12,13 +12,13 @@ nuget Aardvark.Geometry                     ~> 5.3.19
 
 nuget Aardvark.Data.Opc                     ~> 0.11.0
 
-nuget Aardvark.Rendering                    ~> 5.6.0-prerelease0010
-nuget Aardvark.Rendering.Text               ~> 5.6.0-prerelease0010
+nuget Aardvark.Rendering                    ~> 5.6.0
+nuget Aardvark.Rendering.Text               ~> 5.6.0
 
 nuget Aardvark.Geometry.Intersection        ~> 5.5.0
 
-nuget Aardvark.UI                           ~> 5.6.0-prerelease0002
-nuget Aardvark.UI.Primitives                ~> 5.6.0-prerelease0002
+nuget Aardvark.UI                           ~> 5.6.0
+nuget Aardvark.UI.Primitives                ~> 5.6.0
 
 nuget Adaptify.Core                         ~> 1.3.0
 nuget Adaptify.MSBuild                      ~> 1.3.0
@@ -33,8 +33,8 @@ nuget Aardvark.PixImage.Pfim                ~> 0.9.3
 
 nuget Aardvark.Geometry.PolyMesh            ~> 5.5.0
 
-nuget Aardvark.Application.Slim             ~> 5.6.0-prerelease0010
-nuget Aardvark.Application.Slim.GL          ~> 5.6.0-prerelease0010
-nuget Aardvark.Application.Slim.Vulkan      ~> 5.6.0-prerelease0010
+nuget Aardvark.Application.Slim             ~> 5.6.0
+nuget Aardvark.Application.Slim.GL          ~> 5.6.0
+nuget Aardvark.Application.Slim.Vulkan      ~> 5.6.0
 
 nuget Aardium                               ~> 2.1.1
