@@ -1,4 +1,7 @@
-# OPCSelectionViewer – View opcs and select and handle intersections
+# OPC Viewer – View opcs and select and handle intersections
+
+[![Build](https://github.com/aardvark-platform/opcviewer.base/actions/workflows/build.yml/badge.svg)](https://github.com/aardvark-platform/opcviewer.base/actions/workflows/build.yml)
+[![Publish](https://github.com/aardvark-platform/opcviewer.base/actions/workflows/publish.yml/badge.svg)](https://github.com/aardvark-platform/opcviewer.base/actions/workflows/publish.yml)
 
 Supported opc folders are using a Patches and Images Folder a hierarchy.cache.
 
