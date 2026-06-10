@@ -3,9 +3,9 @@ open System
 open Aardvark.Base
 open Aardvark.Application.Slim
 open Aardvark.UI
+open Aardvark.UI.Giraffe
 open Aardium
 
-open Suave
 open PRo3D.Minerva
 open PRo3D.Base
 
@@ -19,7 +19,7 @@ type EmbeddedRessource = EmbeddedRessource
 let main argv =
 
     Aardvark.Init()
-    Aardium.init()
+    Aardium.Init()
 
     use app = new OpenGlApplication()
 
@@ -60,18 +60,7 @@ let main argv =
 
     let rotate = argsList.Contains("-rotate")
     
-    let instance =  LinkingView.App.app opcDir rotate dumpFile cacheFile access |> App.start 
-
-    Log.line ">>>> %s" (System.IO.Path.GetFullPath("./resources"))
-
-    //let resourcesFolder = IO.Path.Combine(IO.Directory.GetCurrentDirectory(), "resources") 
-    let resourcesFolder = IO.Directory.GetCurrentDirectory()
-
-    let webPart = choose [
-        Suave.Files.browse resourcesFolder
-        //Suave.Files.browseHome
-        MutableApp.toWebPart' app.Runtime false instance
-    ]
+    use instance =  LinkingView.App.app opcDir rotate dumpFile cacheFile access |> App.start 
 
     //let bindings = [ HttpBinding.createSimple Protocol.HTTP "127.0.0.1" 4321 ]
     //let config = { Web.defaultConfig with bindings = bindings}
@@ -86,12 +75,10 @@ let main argv =
     //}
 
     // let config = { Suave.Web.defaultConfig with homeFolder = Some @"blablabla"
-    WebPart.startServerLocalhost 4321 [ 
-        webPart
-        
-        //Reflection.assemblyWebPart typeof<EmbeddedRessource>.Assembly
-        //Reflection.assemblyWebPart typeof<Aardvark.UI.Primitives.EmbeddedResources>.Assembly
-        
+    Server.startLocalhost 4321 instance.CancellationToken [
+        MutableApp.toWebPart' app.Runtime false instance
+        WebPart.ofType<Primitives.EmbeddedResources>
+        WebPart.ofType<EmbeddedRessource>
     ] |> ignore
 
     Aardium.run {

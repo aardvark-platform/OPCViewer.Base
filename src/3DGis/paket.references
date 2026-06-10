@@ -2,6 +2,7 @@ FSharp.Core
 Aardvark.PixImage.Pfim
 Aardvark.PixImage.FreeImage
 Aardvark.UI.Primitives
+Aardvark.UI.Giraffe
 Aardvark.Application.Slim.GL
 Adaptify.MSBuild
 Aardium

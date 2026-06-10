@@ -2,9 +2,9 @@ open System
 open Aardvark.Base
 open Aardvark.Application.Slim
 open Aardvark.UI
+open Aardvark.UI.Giraffe
 open Aardium
 
-open Suave
 open OpcViewer.Base
 
 open FSharp.Data.Adaptive
@@ -13,9 +13,8 @@ type EmbeddedRessource = EmbeddedRessource
 
 [<EntryPoint; STAThread>]
 let main argv =
-
     Aardvark.Init()
-    Aardium.init()
+    Aardium.Init()
 
     use app = new OpenGlApplication()
     CooTransformation.initCooTrafo ()
@@ -38,16 +37,11 @@ let main argv =
 
     let rotate = argsList.Contains("-rotate")
     
-    let instance =  ElevationProfileViewer.App.app opcDir axisFile rotate |> App.start 
+    use instance = ElevationProfileViewer.App.app opcDir axisFile rotate |> App.start 
 
-    let resourcesFolder = IO.Directory.GetCurrentDirectory()
-
-    WebPart.startServerLocalhost 4321 [
-        Suave.Files.browse resourcesFolder
+    Server.startLocalhost 4321 instance.CancellationToken [
         MutableApp.toWebPart' app.Runtime false instance
-        Reflection.assemblyWebPart typeof<EmbeddedRessource>.Assembly
-        Reflection.assemblyWebPart typeof<Aardvark.UI.Primitives.EmbeddedResources>.Assembly
-        Suave.Files.browseHome
+        WebPart.ofType<Primitives.EmbeddedResources>
     ] |> ignore
 
     Aardium.run {
@@ -55,6 +49,7 @@ let main argv =
         width 1536
         height 1152
         debug true
+        log (fun msg -> Report.Line(2, $"[Aardium] {msg}"))
     }
 
     0 // return an integer exit code

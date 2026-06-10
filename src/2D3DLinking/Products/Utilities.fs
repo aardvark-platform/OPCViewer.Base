@@ -336,7 +336,7 @@ module Drawing =
       
         Sg.text (Font.create "Consolas" FontStyle.Regular) C4b.White text
             |> Sg.noEvents
-            |> Aardvark.UI.FShadeSceneGraph.Sg.shader {
-            do! DefaultSurfaces.stableTrafo
+            |> Sg.shader {
+                do! DefaultSurfaces.stableTrafo
             }                  
             |> Sg.trafo billboardTrafo  

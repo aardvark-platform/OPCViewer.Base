@@ -3,19 +3,16 @@ open Aardvark.Base
 open Aardvark.Application
 open Aardvark.Application.Slim
 open Aardvark.UI
+open Aardvark.UI.Giraffe
 open Aardium
 
-open Suave
-open Suave.WebPart
 open OpcViewer.Base
 open FSharp.Data.Adaptive
-
-type EmbeddedRessource = EmbeddedRessource
 
 [<EntryPoint; STAThread>]
 let main argv = 
     Aardvark.Init()
-    Aardium.init()
+    Aardium.Init()
 
     ////cootrafo testing
     //CooTransformation.initCooTrafo ()
@@ -50,7 +47,7 @@ let main argv =
 
     let rotate = argsList.Contains("-rotate")
     
-    let instance =  OpcSelectionViewer.App.app opcDir axisFile rotate |> App.start 
+    use instance = OpcSelectionViewer.App.app opcDir axisFile rotate |> App.start 
     //let instance = OpcOutlineTest.OutlineApp.appOutlines opcDir |> App.start 
 
     // use can use whatever suave server to start you mutable app. 
@@ -61,11 +58,9 @@ let main argv =
     // if you are unhappy with them, you can always use your own server config.
     // the localhost variant does not require to allow the port through your firewall.
     // the non localhost variant runs in 127.0.0.1 which enables remote acces (e.g. via your mobile phone)
-    WebPart.startServerLocalhost 4321 [ 
+    Server.startLocalhost 4321 instance.CancellationToken [ 
         MutableApp.toWebPart' app.Runtime false instance
-        Reflection.assemblyWebPart typeof<EmbeddedRessource>.Assembly
-        Reflection.assemblyWebPart typeof<Aardvark.UI.Primitives.EmbeddedResources>.Assembly
-        Suave.Files.browseHome
+        WebPart.ofType<Primitives.EmbeddedResources>
     ] |> ignore
 
     Aardium.run {
@@ -73,6 +68,7 @@ let main argv =
         width 1024
         height 768
         debug true
+        log (fun msg -> Report.Line(2, $"[Aardium] {msg}"))
     }
 
     //use ctrl = new AardvarkCefBrowser()

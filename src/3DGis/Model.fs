@@ -64,17 +64,17 @@ type CameraStateLean =
      sky      : V3d
   }
 
-  type Stationing = {
-      sh : double
-      sv : double
-  }
+type Stationing = {
+    sh : double
+    sv : double
+}
 
-  type OrientedPoint = {
-      direction             : V3d
-      offsetToMainAxisPoint : V3d
-      position              : V3d
-      stationing            : Stationing
-  }
+type OrientedPoint = {
+    direction             : V3d
+    offsetToMainAxisPoint : V3d
+    position              : V3d
+    stationing            : Stationing
+}
 
 type Cone = {
     height : float

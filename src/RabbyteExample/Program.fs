@@ -10,15 +10,14 @@ open Aardvark.Rendering
 open Aardvark.Application
 open Aardvark.Application.Slim
 open Aardvark.UI
+open Aardvark.UI.Giraffe
 
-open Suave
-open Suave.WebPart
 open Aardium
 
 [<EntryPoint; STAThread>]
 let main argv = 
     Aardvark.Init()
-    Aardium.init()
+    Aardium.Init()
 
     // media apps require a runtime, which serves as renderer for your render controls.
     // you can use OpenGL or VulkanApplication.
@@ -35,20 +34,19 @@ let main argv =
     
     let app = ExampleApp.app
 
-    let instance = 
+    use instance = 
         app |> App.start
 
-    WebPart.startServer 4321 [ 
+    Server.startLocalhost 4321 instance.CancellationToken [ 
         MutableApp.toWebPart' runtime false instance
-        Aardvark.UI.Primitives.Resources.WebPart
-        Suave.Files.browseHome
+        WebPart.ofType<Primitives.EmbeddedResources>
     ] |> ignore
-    
 
     Aardium.run {
         url "http://localhost:4321/"
         width 1024
         height 768
         debug true
+        log (fun msg -> Report.Line(2, $"[Aardium] {msg}"))
     }
     0 

@@ -3,17 +3,17 @@ open System
 open Aardvark.Base
 open Aardvark.Application.Slim
 open Aardvark.UI
+open Aardvark.UI.Giraffe
 open Aardium
 
 open FSharp.Data.Adaptive
 
-open Suave
 
 [<EntryPoint>]
 let main argv =
 
     Aardvark.Init()
-    Aardium.init()
+    Aardium.Init()
 
     use app = new OpenGlApplication()
 
@@ -35,11 +35,11 @@ let main argv =
 
     let rotate = argsList.Contains("-rotate")
     
-    let instance =  ViewPlanner.App.app opcDir rotate |> App.start 
+    use instance = ViewPlanner.App.app opcDir rotate |> App.start 
 
-    WebPart.startServerLocalhost 4321 [ 
+    Server.startLocalhost 4321 instance.CancellationToken [ 
         MutableApp.toWebPart' app.Runtime false instance
-        Suave.Files.browseHome
+        WebPart.ofType<Primitives.EmbeddedResources>
     ] |> ignore
 
     Aardium.run {
@@ -47,11 +47,7 @@ let main argv =
         width 1024
         height 768
         debug true
+        log (fun msg -> Report.Line(2, $"[Aardium] {msg}"))
     }
-
-
-
-
-
 
     0 

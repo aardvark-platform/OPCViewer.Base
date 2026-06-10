@@ -2,7 +2,6 @@ namespace OpcSelectionViewer
 
 open System
 open System.IO
-open Aardvark.UI
 open Aardvark.Base
 open Aardvark.Base.Ag
 open FSharp.Data.Adaptive
@@ -12,12 +11,12 @@ open Aardvark.SceneGraph.Semantics
 open Aardvark.Data.Opc
 open Aardvark.SceneGraph.SgPrimitives
 open Aardvark.Rendering.Text
+open Aardvark.UI
 open Aardvark.UI.Primitives
 open Aardvark.UI.Trafos
 open FShade
 open Aardvark.Base.Geometry
 open Aardvark.Geometry
-open ``F# Sg``
 
 open OpcViewer.Base
 open OpcViewer.Base.Picking
@@ -222,16 +221,6 @@ module App =
         //let frustum = Frustum.perspective 60.0 0.1 50000.0 1.0 |> AVal.constant          
         //let cam = AVal.map2 Camera.create m.cameraState.view frustum 
     
-        let semui = 
-            [ 
-                { kind = Stylesheet; name = "semantic.css"; url = "semantic.css" }
-                { kind = Script; name = "semantic.js"; url = "semantic.js" }
-                { kind = Script; name = "essential"; url = "essentialstuff.js" }
-                { kind = Stylesheet; name = "semui-overrides"; url = "semui-overrides.css" }
-                { kind = Script; name = "spectrum.js";  url = "spectrum.js" }
-                { kind = Stylesheet; name = "spectrum.css";  url = "spectrum.css"}
-            ]
-    
         page (fun request -> 
             match Map.tryFind "page" request.queryParams with
             | Some "render" ->
@@ -264,7 +253,7 @@ module App =
                     ]
                 )
             | Some "falseColors" -> 
-                require semui (
+                require Html.semui (
                     SurfaceAttributes.view m.opcAttributes |> UI.map AttributeAction
                 )
             | Some other -> 

@@ -30,22 +30,21 @@ type CameraStateLean =
      sky      : V3d
   }
 
-  type Stationing = {
+type Stationing = {
       sh : double
       sv : double
   }
 
-  type OrientedPoint = {
+type OrientedPoint = {
       direction             : V3d
       offsetToMainAxisPoint : V3d
       position              : V3d
       stationing            : Stationing
   }
 
-  type PlaneCoordinates =
-    {
+type PlaneCoordinates = {
     points : IndexList<V3d>
-    }
+}
 
 [<ModelType>]
 type Model =

@@ -8,7 +8,6 @@ open Aardvark.Rendering
 open Aardvark.SceneGraph
 open Aardvark.Rendering.Text
 open FShade
-open Aardvark.UI.``F# Sg``
 open Aardvark.UI.Trafos
 open Aardvark.Data.Opc
 open Aardvark.SceneGraph.Opc

@@ -16,6 +16,7 @@
     <Compile Include="Annotation\AnnotationSg.fs" />
     <Compile Include="Annotation\AnnotationApp.fs" />
     <None Include="paket.references" />
+    <None Include="paket.template" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OPCViewer.Base\OPCViewer.Base.fsproj" />
