@@ -8,3 +8,5 @@ repositoryType git
 repositoryUrl https://github.com/aardvark-platform/OpcViewer
 description
     Rabbyte - Drawing Tool
+dependencies
+    Adaptify.Core ~> LOCKEDVERSION

@@ -8,3 +8,5 @@ repositoryType git
 repositoryUrl https://github.com/aardvark-platform/OpcViewer
 description
     OPCViewer.Base
+dependencies
+    Adaptify.Core ~> LOCKEDVERSION
