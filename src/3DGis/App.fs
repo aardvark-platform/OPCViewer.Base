@@ -749,7 +749,7 @@ module App =
             ]  
     
         page (fun request -> 
-            match Map.tryFind "page" request.queryParams with
+            match request.QueryParam "page" with
             | Some "render" ->
                 require Html.semui ( 
                     body[onResize (Message.ResizeRenderView >> id)][
