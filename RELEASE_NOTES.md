@@ -1,3 +1,6 @@
+### 1.11.0
+- Updated to Aardvark.Media 5.7 packages
+
 ### 1.11.0-prerelease0001
 - Updated to Aardvark.Media 5.7 prerelease packages
 
