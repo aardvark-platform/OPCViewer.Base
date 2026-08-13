@@ -1,3 +1,6 @@
+﻿### 1.11.1
+- [SurfaceAttributes] Fixed parsing of multi-channel ChannelsDefinedRange/ChannelsActualRange
+
 ### 1.11.0
 - Updated to Aardvark.Media 5.7 packages
 
