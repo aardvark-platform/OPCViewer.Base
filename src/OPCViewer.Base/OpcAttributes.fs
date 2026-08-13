@@ -48,18 +48,48 @@ module UI =
                 }
             )
 
-module SurfaceAttributes = 
+module SurfaceAttributes =
     open System.Xml
-            
+    open System.Globalization
+    open System.Text.RegularExpressions
+
     let get (name : string) (node : XmlNode)=
         node.SelectSingleNode(name).InnerText.Trim()
 
-    let parseMap (index : int)(node : XmlNode) : ScalarLayer = 
-        let definedRange = node |> get "ChannelsDefinedRange" |> Range1d.Parse
-        { 
-            label        = node |> get "Label" 
-            actualRange  = node |> get "ChannelsActualRange"  |> Range1d.Parse
-            definedRange = definedRange 
+    let private rangePattern = Regex(@"\[\s*([^\[\],]+?)\s*,\s*([^\[\],]+?)\s*\]", RegexOptions.Compiled)
+
+    /// ChannelsDefinedRange / ChannelsActualRange holds a single range "[min, max]" for
+    /// single channel maps, but one range per channel - "[[min,max], [min,max], [min,max]]" -
+    /// for multi-channel ones such as normals, gravity vectors or lon/lat/radius.
+    /// Range1d.Parse only understands the former.
+    let parseChannelRanges (text : string) =
+        rangePattern.Matches(text)
+        |> Seq.cast<Match>
+        |> Seq.choose (fun m ->
+            match Double.TryParse(m.Groups.[1].Value, NumberStyles.Float, CultureInfo.InvariantCulture),
+                  Double.TryParse(m.Groups.[2].Value, NumberStyles.Float, CultureInfo.InvariantCulture) with
+            | (true, min), (true, max) -> Some (Range1d(min, max))
+            | _ -> None
+        )
+        |> Seq.toList
+
+    /// The range a scalar layer reports. ScalarLayer has room for exactly one, and its
+    /// consumers refer to the layer's *first* channel - the false colour legend, and mapping
+    /// sampled texture values back to physical ones (attribute textures are read through
+    /// ChannelReference.ChannelWithIndex 0). Unioning the channels instead would widen the
+    /// range and skew everything derived from it.
+    let parseChannelRange (name : string) (node : XmlNode) =
+        let text = node |> get name
+        match parseChannelRanges text |> List.tryHead with
+        | Some range -> range
+        | None -> failwithf "[SurfaceAttributes] could not parse %s: %s" name text
+
+    let parseMap (index : int)(node : XmlNode) : ScalarLayer =
+        let definedRange = node |> parseChannelRange "ChannelsDefinedRange"
+        {
+            label        = node |> get "Label"
+            actualRange  = node |> parseChannelRange "ChannelsActualRange"
+            definedRange = definedRange
             index        = index
             colorLegend  = (FalseColorsModel.initDefinedScalarsLegend definedRange)
         }
